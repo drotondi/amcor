@@ -9,7 +9,8 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: #e0e0e0;
+            background-color: #121212;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
@@ -22,10 +23,10 @@
         .details {
             width: 50%;
             padding-left: 20px;
-            border-left: 1px solid #ccc;
+            border-left: 1px solid #444;
         }
         .phase-box {
-            background-color: #f0f0f0;
+            background-color: #1e1e1e;
             border-radius: 8px;
             padding: 15px;
             margin-bottom: 20px;
@@ -33,7 +34,7 @@
             transition: background-color 0.3s;
         }
         .phase-box:hover, .phase-box.active {
-            background-color: #3498db;
+            background-color: #2c5282;
             color: white;
         }
         .phase-box:hover h3, .phase-box.active h3 {
@@ -42,14 +43,21 @@
         .arrow {
             text-align: center;
             margin: 10px 0;
+            color: #4a5568;
         }
         h1, h2, h3 {
             margin-top: 0;
-            color: #3498db;
+            color: #63b3ed;
         }
         ul {
             padding-left: 20px;
         }
+        li {
+            margin-bottom: 5px;
+        }
+        .completed:before { content: "✔️ "; }
+        .in-progress:before { content: "⬅️ "; }
+        .not-started:before { content: "❌ "; }
     </style>
 </head>
 <body>
@@ -64,11 +72,11 @@
                 key: "Establish Vision and Alignment",
                 description: "Leaders develop a clear vision for lean transformation and align the organization's strategy. This phase focuses on creating a burning platform for change and securing commitment from top management.",
                 programs: [
-                    "Leadership Commitment and Endorsement ✔️",
-                    "Hoshin Kanri deployment ✔️",
-                    "Change Management Training ✔️",
-                    "Rewards & Recognition system (CreaXion) ✔️",
-                    "Executive Lean Leadership Workshops ❌"
+                    { text: "Leadership Commitment and Endorsement", status: "completed" },
+                    { text: "Hoshin Kanri deployment", status: "completed" },
+                    { text: "Change Management Training", status: "completed" },
+                    { text: "Rewards & Recognition system (CreaXion)", status: "completed" },
+                    { text: "Executive Lean Leadership Workshops", status: "not-started" }
                 ]
             },
             { 
@@ -77,13 +85,13 @@
                 key: "Build Capability and Demonstrate Value",
                 description: "This phase focuses on building organizational capability through education and hands-on experience. Pilot projects are implemented to demonstrate the value of lean principles and practices.",
                 programs: [
-                    "Roll-out Green Belt program in Latam (Leaders) ⬅️",
-                    "Yellow Belt Virtual programs implementation ✔️",                   
-                    "Improvement Ideas & 7 Deadly Wastes⬅️",
-                    "Kaizen Events in Key Areas ⬅️",
-                    "5S and Visual Management Implementation (FMS) ⬅️",
-                    "Pilot Autonomous Maintenance Program ✔️",
-                    "Savings Program (Ideations) ✔️"
+                    { text: "Roll-out Green Belt program in Latam (Leaders)", status: "in-progress" },
+                    { text: "Yellow Belt Virtual programs implementation", status: "completed" },
+                    { text: "Improvement Ideas & 7 Deadly Wastes", status: "in-progress" },
+                    { text: "Kaizen Events in Key Areas", status: "in-progress" },
+                    { text: "5S and Visual Management Implementation (FMS)", status: "in-progress" },
+                    { text: "Pilot Autonomous Maintenance Program", status: "completed" },
+                    { text: "Savings Program (Ideations)", status: "completed" }
                 ]
             },
             { 
@@ -92,12 +100,12 @@
                 key: "Standardize and Scale",
                 description: "Lean principles and practices are systematically deployed across the organization. This phase focuses on standardizing best practices, developing robust management systems, and scaling lean initiatives. Advanced problem-solving techniques and training programs are introduced to deepen the organization's capabilities.",
                 programs: [
-                    "AMS (Amcor Manufacturing System) ❌",
-                    "Sites Daily Management Systems ❌",
-                    "Green Belt Programs (with AM teams at each BUs) ❌",
-                    "Initiate Black Belt Programs ❌",
-                    "A3 Problem Solving ❌",
-                    "Standard Work (ARP Academy/ LMS365) ❌"
+                    { text: "AMS (Amcor Manufacturing System)", status: "not-started" },
+                    { text: "Sites Daily Management Systems", status: "not-started" },
+                    { text: "Green Belt Programs (with AM teams at each BUs)", status: "not-started" },
+                    { text: "Initiate Black Belt Programs", status: "not-started" },
+                    { text: "A3 Problem Solving", status: "not-started" },
+                    { text: "Standard Work (ARP Academy/ LMS365)", status: "not-started" }
                 ]
             },
             { 
@@ -106,10 +114,10 @@
                 key: "Sustain and Innovate",
                 description: "The organization develops a self-sustaining culture of continuous improvement. This phase focuses on developing problem-solving capabilities at all levels and continuously refining the lean system. Advanced technologies like AI are integrated to enhance lean practices.",
                 programs: [
-                    "Total Productive Maintenance (TPM) ❌",
-                    "Supplier Development Programs ❌",
-                    "AI-Data analytics models ❌",
-                    "Master Black Belt Program (ASQ) ❌"
+                    { text: "Total Productive Maintenance (TPM)", status: "not-started" },
+                    { text: "Supplier Development Programs", status: "not-started" },
+                    { text: "AI-Data analytics models", status: "not-started" },
+                    { text: "Master Black Belt Program (ASQ)", status: "not-started" }
                 ]
             }
         ];
@@ -146,7 +154,7 @@
                 <p>${phase.description}</p>
                 <h3>Key Programs:</h3>
                 <ul>
-                    ${phase.programs.map(program => `<li>${program}</li>`).join('')}
+                    ${phase.programs.map(program => `<li class="${program.status}">${program.text}</li>`).join('')}
                 </ul>
             `;
             document.querySelectorAll('.phase-box').forEach(box => box.classList.remove('active'));
