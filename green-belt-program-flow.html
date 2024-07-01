@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Belt Program Process Flow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #3498db;
+        }
+        .phase {
+            margin-bottom: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .phase-header {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .phase-header:hover {
+            background-color: #2980b9;
+        }
+        .phase-content {
+            display: none;
+            padding: 15px;
+            background-color: #ecf0f1;
+        }
+        ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .meta-info {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .arrow {
+            text-align: center;
+            font-size: 24px;
+            color: #3498db;
+            margin: 5px 0;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        .control-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .control-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Green Belt Program Process Flow</h1>
+        <div class="meta-info">
+            <p><strong>Scope:</strong> ARP North America & Latin-America</p>
+            <p><strong>Objective:</strong> This document outlines the steps necessary to complete a Green Belt Program 2 weeks Course.</p>
+        </div>
+        <div class="controls">
+            <button class="control-btn" onclick="toggleAll(true)">Open All</button>
+            <button class="control-btn" onclick="toggleAll(false)">Collapse All</button>
+        </div>
+        <div id="process-flow"></div>
+    </div>
+
+    <script>
+        const phases = [
+            {
+                name: "1) Planning Phase",
+                steps: [
+                    "Planning of location, number of candidates and location",
+                    "Team of trainers identification"
+                ]
+            },
+            {
+                name: "2) Nomination Phase",
+                steps: [
+                    "Engage OpsLeads to request potential candidates cross-functions",
+                    "Candidates calibration",
+                    "Sharepoint submission process via GB Hub",
+                    "Candidates confirmation process via GB Hub"
+                ]
+            },
+            {
+                name: "3) Material Content Preparation",
+                steps: [
+                    "Prepare and Send communication Letter to Sponsors & Candidates",
+                    "Perform Virtual Trainings to Candidates & Sponsors",
+                    "Prepare Class Agenda and Material Content",
+                    "Secure Hotel, Flights booking process along with supportive Material (books, snacks, etc)"
+                ]
+            },
+            {
+                name: "4) Class Execution",
+                steps: [
+                    "Week 1 Class execution",
+                    "Week 2 Class execution",
+                    "Approve Course Test",
+                    "Complete Course Survey"
+                ]
+            },
+            {
+                name: "5) Follow up & Closure",
+                steps: [
+                    "Stagegate #1- Define & Measurement Phases",
+                    "Stagegate #2- Analyze Phase",
+                    "Stagegate #3- Improve Phase",
+                    "Stagegate #4- Control Phase",
+                    "Closure and Certification delivery"
+                ]
+            }
+        ];
+
+        function createProcessFlow() {
+            const flowDiv = document.getElementById('process-flow');
+            phases.forEach((phase, index) => {
+                const phaseDiv = document.createElement('div');
+                phaseDiv.className = 'phase';
+                
+                const header = document.createElement('div');
+                header.className = 'phase-header';
+                header.textContent = phase.name;
+                header.onclick = () => togglePhase(index);
+                
+                const content = document.createElement('div');
+                content.className = 'phase-content';
+                content.id = `phase-${index}`;
+                
+                const stepsList = document.createElement('ul');
+                phase.steps.forEach(step => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = step;
+                    stepsList.appendChild(listItem);
+                });
+                
+                content.appendChild(stepsList);
+                phaseDiv.appendChild(header);
+                phaseDiv.appendChild(content);
+                flowDiv.appendChild(phaseDiv);
+
+                if (index < phases.length - 1) {
+                    const arrow = document.createElement('div');
+                    arrow.className = 'arrow';
+                    arrow.innerHTML = '&#8595;'; // Down arrow
+                    flowDiv.appendChild(arrow);
+                }
+            });
+        }
+
+        function togglePhase(index) {
+            const content = document.getElementById(`phase-${index}`);
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function toggleAll(show) {
+            phases.forEach((_, index) => {
+                const content = document.getElementById(`phase-${index}`);
+                content.style.display = show ? 'block' : 'none';
+            });
+        }
+
+        createProcessFlow();
+    </script>
+</body>
+</html>
