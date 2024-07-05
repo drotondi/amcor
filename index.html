@@ -1,168 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lean Continuous Improvement Culture at AMCOR</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
+    <title>Juego de los 7 Desperdicios Lean</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #e0e0e0;
-            background-color: #121212;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: url('https://images.unsplash.com/photo-1542038374857-0168e59a71e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YWJzdHJhY3QlMjBibHVlfGVufDB8fDB8fA%3D%3D&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
         }
-        .phases {
-            width: 50%;
-            padding-right: 20px;
-        }
-        .details {
-            width: 50%;
-            padding-left: 20px;
-            border-left: 1px solid #444;
-        }
-        .phase-box {
-            background-color: #1e1e1e;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .phase-box:hover, .phase-box.active {
-            background-color: #2c5282;
-            color: white;
-        }
-        .phase-box:hover h3, .phase-box.active h3 {
-            color: white;
-        }
-        .arrow {
+        #game-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
             text-align: center;
-            margin: 10px 0;
-            color: #4a5568;
+            max-width: 800px;
+            width: 100%;
         }
-        h1, h2, h3 {
-            margin-top: 0;
-            color: #63b3ed;
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        #scenario {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        #options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .option-button {
+            margin: 10px;
+            padding: 10px 15px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 150px;
+            height: 150px;
+            justify-content: center;
+        }
+        .option-button:hover {
+            background-color: #2980b9;
+        }
+        .option-button i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .option-button .emoji {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+        #feedback {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        #score {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+        #waste-image {
+            max-width: 300px;
+            max-height: 200px;
+            margin: 20px auto;
+            border-radius: 10px;
+            display: none;
         }
         ul {
-            padding-left: 20px;
+            list-style-type: none;
+            padding-left: 0;
         }
         li {
             margin-bottom: 5px;
         }
-        .completed:before { content: "✔️ "; }
-        .in-progress:before { content: "⬅️ "; }
-        .not-started:before { content: "❌ "; }
     </style>
 </head>
 <body>
-    <div class="phases" id="phases"></div>
-    <div class="details" id="details"></div>
+    <div id="game-container">
+        <h1>¡Identifica el Desperdicio!</h1>
+        <div id="scenario"></div>
+        <img id="waste-image" src="" alt="Waste Image">
+        <div id="options"></div>
+        <div id="feedback"></div>
+        <div id="score">Puntuación: 0</div>
+    </div>
 
     <script>
-        const phases = [
-            { 
-                id: 1, 
-                title: "Leadership and Strategy", 
-                key: "Establish Vision and Alignment",
-                description: "Leaders develop a clear vision for lean transformation and align the organization's strategy. This phase focuses on creating a burning platform for change and securing commitment from top management.",
-                programs: [
-                    { text: "Leadership Commitment & Endorsement", status: "completed" },
-                    { text: "Hoshin Kanri deployment", status: "completed" },
-                    { text: "Change Management Training", status: "completed" },
-                    { text: "Rewards & Recognition system (CreaXion)", status: "completed" },
-                    { text: "Executive Lean Leadership Workshops", status: "not-started" }
-                ]
-            },
-            { 
-                id: 2, 
-                title: "Education and Pilot Implementation", 
-                key: "Build Capability and Demonstrate Value",
-                description: "This phase focuses on building organizational capability through education and hands-on experience. Pilot projects are implemented to demonstrate the value of lean principles and practices.",
-                programs: [
-                    { text: "Roll-out Green Belt program in Latam (Leaders)", status: "in-progress" },
-                    { text: "Yellow Belt Virtual programs implementation", status: "completed" },
-                    { text: "Improvement Ideas & 7 Deadly Wastes", status: "in-progress" },
-                    { text: "Kaizen Events in Key Areas", status: "in-progress" },
-                    { text: "5S and Visual Management Implementation (FMS)", status: "in-progress" },
-                    { text: "Pilot Autonomous Maintenance Program", status: "completed" },
-                    { text: "Savings Program (Ideations)", status: "completed" }
-                ]
-            },
-            { 
-                id: 3, 
-                title: "Systematic Deployment", 
-                key: "Standardize and Scale",
-                description: "Lean principles and practices are systematically deployed across the organization. This phase focuses on standardizing best practices, developing robust management systems, and scaling lean initiatives. Advanced problem-solving techniques and training programs are introduced to deepen the organization's capabilities.",
-                programs: [
-                    { text: "AMS (Amcor Manufacturing System)", status: "not-started" },
-                    { text: "Sites Daily Management Systems", status: "not-started" },
-                    { text: "Green Belt Programs (with AM teams at each BUs)", status: "not-started" },
-                    { text: "Initiate Black Belt Programs", status: "not-started" },
-                    { text: "A3 Problem Solving", status: "not-started" },
-                    { text: "Standard Work (ARP Academy/ LMS365)", status: "not-started" }
-                ]
-            },
-            { 
-                id: 4, 
-                title: "Continuous Improvement Culture", 
-                key: "Sustain and Innovate",
-                description: "The organization develops a self-sustaining culture of continuous improvement. This phase focuses on developing problem-solving capabilities at all levels and continuously refining the lean system. Advanced technologies like AI are integrated to enhance lean practices.",
-                programs: [
-                    { text: "Total Productive Maintenance (TPM)", status: "not-started" },
-                    { text: "Supplier Development Programs", status: "not-started" },
-                    { text: "AI-Data analytics models", status: "not-started" },
-                    { text: "Master Black Belt Program (ASQ)", status: "not-started" }
-                ]
-            }
+        const desperdicios = [
+            { name: "Transporte", icon: "fas fa-truck", emoji: "🚚", image: "/api/placeholder/300/200" },
+            { name: "Inventario", icon: "fas fa-boxes", emoji: "📦", image: "/api/placeholder/300/200" },
+            { name: "Movimiento", icon: "fas fa-walking", emoji: "🚶", image: "/api/placeholder/300/200" },
+            { name: "Espera", icon: "far fa-clock", emoji: "⏰", image: "/api/placeholder/300/200" },
+            { name: "Sobreproducción", icon: "fas fa-industry", emoji: "🏭", image: "/api/placeholder/300/200" },
+            { name: "Sobreprocesamiento", icon: "fas fa-cogs", emoji: "🔧", image: "/api/placeholder/300/200" },
+            { name: "Defectos", icon: "fas fa-exclamation-triangle", emoji: "❗", image: "/api/placeholder/300/200" }
         ];
 
-        function renderPhases() {
-            const phasesContainer = document.getElementById('phases');
-            phasesContainer.innerHTML = '<h1>4-Phase Lean Continuous Improvement Culture Model</h1>';
-            phases.forEach((phase, index) => {
-                const phaseBox = document.createElement('div');
-                phaseBox.className = 'phase-box';
-                phaseBox.innerHTML = `
-                    <h3>${phase.id}. ${phase.title}</h3>
-                    <p>${phase.key}</p>
+        const escenarios = [
+            { description: "Los trabajadores caminan frecuentemente largas distancias para buscar herramientas", answer: "Movimiento" },
+            { description: "Productos almacenados en un depósito durante meses", answer: "Inventario" },
+            { description: "Máquinas funcionando para producir artículos que aún no se necesitan", answer: "Sobreproducción" },
+            { description: "Empleados inactivos mientras esperan aprobaciones", answer: "Espera" },
+            { description: "Productos que se mueven varias veces antes de llegar al cliente", answer: "Transporte" },
+            { description: "Agregar características a un producto que el cliente no valora", answer: "Sobreprocesamiento" },
+            { description: "Productos que necesitan ser rehechos debido a problemas de calidad", answer: "Defectos" }
+        ];
+
+        let escenarioActual;
+        let puntuacion = 0;
+
+        function iniciarJuego() {
+            escenarioActual = escenarios[Math.floor(Math.random() * escenarios.length)];
+            document.getElementById('scenario').innerText = escenarioActual.description;
+            document.getElementById('options').innerHTML = '';
+            document.getElementById('waste-image').style.display = 'none';
+            desperdicios.forEach(desperdicio => {
+                const boton = document.createElement('button');
+                boton.className = 'option-button';
+                boton.innerHTML = `
+                    <i class="${desperdicio.icon}"></i>
+                    <span class="emoji">${desperdicio.emoji}</span>
+                    ${desperdicio.name}
                 `;
-                phaseBox.onclick = () => showDetails(phase.id);
-                phasesContainer.appendChild(phaseBox);
-
-                if (index < phases.length - 1) {
-                    const arrow = document.createElement('div');
-                    arrow.className = 'arrow';
-                    arrow.innerHTML = '<i data-feather="arrow-down"></i>';
-                    phasesContainer.appendChild(arrow);
-                }
+                boton.onclick = () => verificarRespuesta(desperdicio.name);
+                document.getElementById('options').appendChild(boton);
             });
-            feather.replace();
+            document.getElementById('feedback').innerText = '';
         }
 
-        function showDetails(phaseId) {
-            const phase = phases.find(p => p.id === phaseId);
-            const detailsContainer = document.getElementById('details');
-            detailsContainer.innerHTML = `
-                <h2>${phase.id}. ${phase.title}</h2>
-                <h3>${phase.key}</h3>
-                <p>${phase.description}</p>
-                <h3>Key Programs:</h3>
-                <ul>
-                    ${phase.programs.map(program => `<li class="${program.status}">${program.text}</li>`).join('')}
-                </ul>
-            `;
-            document.querySelectorAll('.phase-box').forEach(box => box.classList.remove('active'));
-            document.querySelectorAll('.phase-box')[phaseId - 1].classList.add('active');
+        function verificarRespuesta(respuesta) {
+            const desperdicioSeleccionado = desperdicios.find(d => d.name === respuesta);
+            const desperdicioCorrectoo = desperdicios.find(d => d.name === escenarioActual.answer);
+            
+            if (respuesta === escenarioActual.answer) {
+                puntuacion++;
+                document.getElementById('feedback').innerText = `¡Correcto! ${desperdicioSeleccionado.emoji} Se identificó el desperdicio de ${escenarioActual.answer}.`;
+                document.getElementById('feedback').style.color = "#27ae60";
+            } else {
+                document.getElementById('feedback').innerText = `Incorrecto. ${desperdicioCorrectoo.emoji} Este es un ejemplo de desperdicio de ${escenarioActual.answer}.`;
+                document.getElementById('feedback').style.color = "#c0392b";
+            }
+            
+            document.getElementById('score').innerText = "Puntuación: " + puntuacion;
+            
+            // Show the image of the correct waste
+            const wasteImage = document.getElementById('waste-image');
+            wasteImage.src = desperdicioCorrectoo.image;
+            wasteImage.alt = `Imagen de ${escenarioActual.answer}`;
+            wasteImage.style.display = 'block';
+            
+            setTimeout(iniciarJuego, 3000);
         }
 
-        renderPhases();
-        showDetails(1);  // Show details for the first phase by default
+        iniciarJuego();
     </script>
 </body>
 </html>
